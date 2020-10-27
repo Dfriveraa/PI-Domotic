@@ -1,9 +1,7 @@
 from _thread import start_new_thread
 from MqttConnection import Mqtt
 from SocketServer import Socket
-
-import tensorflow as tf
-
+from Utils import count_back
 mqtt = Mqtt()
 socket = Socket()
 try:
@@ -11,5 +9,6 @@ try:
 except Exception as ex:
     print("Error: unable to start thread. ex: {}".format(ex))
 
-socket.count_back()
-socket.start()
+while True:
+    count_back(5)
+    socket.start()

@@ -1,27 +1,24 @@
 import socket
 import struct
-
-import time
-
+from Gesture import Gesture
+from Classifier import Classifier
+from Utils import count_back
 
 class Socket:
     """"""
 
     def __init__(self, ):
+        self.model = Classifier()
         self.host = ('0.0.0.0', 8090)
-        self.count = 3
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM, socket.IPPROTO_UDP)
-
-    def count_back(self):
-        while self.count > 0:
-            print(self.count)
-            time.sleep(self.count)
-            self.count -= 1
+        self.socket.bind(self.host)
 
     def start(self):
-        self.socket.bind(self.host)
-        count=0
+        gesture = Gesture(self.model)
+        count = 0
         while count < 300:
             content = self.socket.recv(180)
-            count = count + 1
-            # gesture.append(struct.unpack('2H6h', content))
+            count += 1
+            print(count)
+            gesture.append(struct.unpack('2H6h', content))
+        gesture.predict()
