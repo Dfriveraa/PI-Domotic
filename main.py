@@ -10,5 +10,5 @@ except Exception as ex:
     print("Error: unable to start thread. ex: {}".format(ex))
 
 while True:
-    count_back(5)
+    count_back(3)
     socket.start()
