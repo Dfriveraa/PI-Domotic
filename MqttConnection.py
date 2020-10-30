@@ -19,15 +19,16 @@ class Mqtt:
         self.client.loop_forever()
 
     @staticmethod
-    def send_conf(subtopic, conf):
+    def send_pub(subtopic, conf):
         try:
-            publish.single(MQTT_PATH + "/" + subtopic, "conf:" + conf, hostname=MQTT_LOCAL_SERVER)
+            print(MQTT_PATH + "/" + subtopic, "conf:" + conf)
+            publish.single(MQTT_PATH + "/" + subtopic,conf, hostname=MQTT_LOCAL_SERVER)
         except Exception as ex:
             print("Error in send_conf(). ex: {}".format(ex))
 
     def on_connect(self, client, userdata, flags, rc):
         print("Connected with result code " + str(rc))
-        client.subscribe(MQTT_PATH + "/+")
+        self.client.subscribe(MQTT_PATH + "/+")
 
     def on_message(self, client, userdata, msg):
         print("InternalComm got a message")

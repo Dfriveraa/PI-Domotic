@@ -14,4 +14,6 @@ class Gesture:
 
     def predict(self):
         aux = filter(self.collection)
-        print(self.model.predict(aux))
+        aux=self.model.predict(aux)
+        print(aux)
+        return aux[0]
