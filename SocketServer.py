@@ -37,9 +37,6 @@ class Socket:
             start_time = timeit.default_timer()
             self.test_clean()
             print(timeit.default_timer() - start_time)
-            # self.lock = True
-            # self.interrupt(3)
-            # cleaner = threading.Thread(target=self.clear_buffer()).start()
 
     def test_clean(self):
         count = 0
