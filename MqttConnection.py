@@ -31,5 +31,4 @@ class Mqtt:
         self.client.subscribe(MQTT_PATH + "/+")
 
     def on_message(self, client, userdata, msg):
-        print("InternalComm got a message")
-        print('%s %s' % (msg.topic, msg.payload))
+        print('')

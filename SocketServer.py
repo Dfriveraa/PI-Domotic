@@ -2,7 +2,6 @@ import socket
 import struct
 from Gesture import Gesture
 from Classifier import Classifier
-from HomeControl import Home
 import time
 import timeit
 
@@ -11,7 +10,6 @@ class Socket:
 
     def __init__(self):
         self.model = Classifier()
-        self.home = Home()
         self.host = ('0.0.0.0', 8090)
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM, socket.IPPROTO_UDP)
         self.lock = False
@@ -25,22 +23,11 @@ class Socket:
 
     def start(self):
         self.socket.bind(self.host)
+        gesture = Gesture(self.model)
         while True:
-            gesture = Gesture(self.model)
-            count = 0
-            while count < 300:
-                content = self.socket.recv(180)
-                count += 1
-                print(count)
-                gesture.append(struct.unpack('2H6h', content))
-            self.home.update(gesture.predict())
-            start_time = timeit.default_timer()
-            self.test_clean()
-            print(timeit.default_timer() - start_time)
-
-    def test_clean(self):
-        count = 0
-        while count < 330:
-            self.socket.recv(180)
-            count += 1
-        print('ya')
+            content = self.socket.recv(180)
+            gesture.append(struct.unpack('2H6h', content))
+            # self.home.update(gesture.predict())
+            # start_time = timeit.default_timer()
+            # self.test_clean()
+            # print(timeit.default_timer() - start_time)
